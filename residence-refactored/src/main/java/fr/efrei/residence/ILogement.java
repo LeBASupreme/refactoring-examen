@@ -3,7 +3,7 @@ package fr.efrei.residence;
 import java.util.List;
 
 /**
- * Tout ce qu'on peut faire avec un logement de la résidence.
+ * Ce que tout logement de la résidence sait faire, quel que soit son type.
  */
 public interface ILogement {
 
@@ -17,6 +17,10 @@ public interface ILogement {
 
     boolean isMeuble();
 
+    int getNombrePlaces();
+
+    List<Etudiant> getOccupants();
+
     boolean estLibre();
 
     boolean estAccessiblePMR();
@@ -24,21 +28,4 @@ public interface ILogement {
     void loger(Etudiant e);
 
     void liberer(Etudiant e);
-
-    Etudiant getOccupant();
-
-    // --- colocation ---
-    void ajouterColocataire(Etudiant e);
-
-    void retirerColocataire(Etudiant e);
-
-    List<Etudiant> getColocataires();
-
-    int getNombrePlaces();
-
-    // --- extérieur ---
-    double getSurfaceBalcon();
-
-    // --- entretien ---
-    void nettoyerPartiesCommunes();
 }

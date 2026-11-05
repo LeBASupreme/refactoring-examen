@@ -29,12 +29,9 @@ public class RapportGenerateur {
                 if (!l.estLibre()) nbT2Occupes++;
             } else if (l.getType() == TypeLogement.COLOCATION) {
                 nbPlacesColoc += l.getNombrePlaces();
-                nbPlacesColocOccupees += l.getColocataires().size();
+                nbPlacesColocOccupees += l.getOccupants().size();
             }
-            try {
-                surfaceBalcons += l.getSurfaceBalcon();
-            } catch (UnsupportedOperationException ex) {
-            }
+            surfaceBalcons += l.getSurfaceBalcon();
         }
         r += "Studios      : " + nbStudiosOccupes + "/" + nbStudios + "\n";
         r += "T1           : " + nbT1Occupes + "/" + nbT1 + "\n";

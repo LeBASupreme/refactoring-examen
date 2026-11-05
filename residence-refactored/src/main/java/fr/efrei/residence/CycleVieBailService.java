@@ -94,12 +94,8 @@ public class CycleVieBailService {
             return false;
         }
         Logement logement = bail.getLogement();
-        if (logement instanceof Colocation) {
-            logement.retirerColocataire(bail.getEtudiant());
-            logement.nettoyerPartiesCommunes();
-        } else {
-            logement.liberer(bail.getEtudiant());
-        }
+        logement.liberer(bail.getEtudiant());
+        logement.apresSortie();
 
         double impayes = bail.soldeDu > 0 ? bail.soldeDu : 0;
         double restitution = bail.getCaution() - retenuesDegats - impayes;
@@ -133,11 +129,7 @@ public class CycleVieBailService {
             return false;
         }
         Logement logement = bail.getLogement();
-        if (logement instanceof Colocation) {
-            logement.retirerColocataire(bail.getEtudiant());
-        } else {
-            logement.liberer(bail.getEtudiant());
-        }
+        logement.liberer(bail.getEtudiant());
         bail.setStatut(StatutBail.ANNULE);
         baux.mettreAJour(bail);
         System.out.println("Bail " + idBail + " annulé, frais de dossier conservés : "

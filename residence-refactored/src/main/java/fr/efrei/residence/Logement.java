@@ -1,5 +1,9 @@
 package fr.efrei.residence;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public abstract class Logement implements ILogement {
 
     public static final int ETAGE_REZ_DE_CHAUSSEE = 0;
@@ -9,7 +13,7 @@ public abstract class Logement implements ILogement {
     protected double surface;
     protected int etage;
     protected boolean meuble;
-    protected Etudiant occupant;
+    private final List<Etudiant> occupants = new ArrayList<Etudiant>();
 
     public Logement(String numero, TypeLogement type, double surface, int etage, boolean meuble) {
         this.numero = numero;
@@ -24,10 +28,17 @@ public abstract class Logement implements ILogement {
     public double getSurface() { return surface; }
     public int getEtage() { return etage; }
     public boolean isMeuble() { return meuble; }
-    public Etudiant getOccupant() { return occupant; }
+
+    public int getNombrePlaces() {
+        return 1;
+    }
+
+    public List<Etudiant> getOccupants() {
+        return Collections.unmodifiableList(occupants);
+    }
 
     public boolean estLibre() {
-        return occupant == null;
+        return occupants.size() < getNombrePlaces();
     }
 
     public boolean estAccessiblePMR() {
@@ -36,13 +47,20 @@ public abstract class Logement implements ILogement {
     }
 
     public void loger(Etudiant e) {
-        if (occupant != null) {
-            throw new IllegalStateException("Logement " + numero + " déjà occupé");
+        if (!estLibre()) {
+            throw new IllegalStateException("Logement " + numero + " complet");
         }
-        occupant = e;
+        occupants.add(e);
     }
 
     public void liberer(Etudiant e) {
-        occupant = null;
+        occupants.remove(e);
+    }
+
+    public double getSurfaceBalcon() {
+        return 0;
+    }
+
+    public void apresSortie() {
     }
 }

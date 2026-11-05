@@ -24,11 +24,7 @@ public class ServiceAttribution {
                 continue;
             }
 
-            if (logement instanceof Colocation) {
-                logement.ajouterColocataire(etudiant);
-            } else {
-                logement.loger(etudiant);
-            }
+            logement.loger(etudiant);
             return new ResultatAttribution(logement, loyer, charges);
         }
 
